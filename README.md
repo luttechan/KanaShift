@@ -68,23 +68,6 @@ py app.py
 
 Run **`debug.bat`** to launch with a visible console if startup fails or you need to read error messages.
 
-### Build a standalone executable
-
-Run **`build_windows.bat`** on Windows. It uses PyInstaller and writes the executable to:
-
-```text
-dist\KanaShift.exe
-```
-
-You can also build manually:
-
-```powershell
-py -m pip install -r requirements.txt pyinstaller
-py -m PyInstaller --noconfirm --clean --onefile --windowed --name KanaShift app.py
-```
-
-The executable bundles the Python dependencies, but **does not bundle Windows language packs or IMEs**. A compiled EXE is not included in the source repository unless a release explicitly provides one.
-
 ## Getting started
 
 1. Launch KanaShift. A short **`Loading....`** indicator will appear.
