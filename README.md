@@ -1,68 +1,162 @@
-# KanaShift v0.5 — 첫 실행 설정 + 설치된 입력기 + Loading HUD
+# KanaShift
 
-Windows 10/11용 Python 프로그램입니다. `CapsLock + Q`를 누르면 화면 중앙에 입력 언어 HUD가 나타납니다. 최대 **6개** 입력기를 사용자가 직접 구성할 수 있으며 트레이 `K` 아이콘 → **설정**에서 변경합니다.
+**A customizable multilingual input switcher for Windows.**
 
-## 설치
+KanaShift lets you switch between keyboard layouts and supported IME modes using a single shortcut, **`CapsLock + Q`**. It displays a centered, keyboard-friendly selection overlay instead of making you cycle through input languages one by one.
 
-1. Windows에서 **설정 → 시간 및 언어 → 언어 및 지역**으로 이동해 필요한 언어 및 키보드/IME를 추가합니다. KanaShift는 Windows에 없는 입력기를 만들어 주지 않습니다.
-2. Python 3.10+가 설치된 PC에서 `install.bat` 실행.
-3. `run.bat` 실행. 시작 화면에 **Loading....**이 표시되고 입력기 검색이 끝나면 **처음 사용할 때만 설정 창**이 나타납니다. 로그를 보려면 `debug.bat` 실행.
-4. 첫 실행: 화면에 나타난 첫 슬롯에 사용할 언어와 입력 모드를 지정합니다. **1개만 등록해도 되고**, `+ 입력기 추가`로 2-6개까지 늘릴 수 있습니다. 필요 없는 슬롯은 `×`로 지웁니다. `설정 완료 · 시작하기`를 누르면 저장 후 단축키가 활성화됩니다. 설정 화면을 종료하면 프로그램도 종료됩니다.
-5. 이미 저장된 유효한 슬롯이 있으면 초기 설정은 건너뜁니다. 기존 슬롯의 입력기가 모두 삭제된 경우에는 다시 설정 창을 표시합니다.
-6. `CapsLock + Q`로 HUD 열기 → `1-6` / 방향키 + Enter / 마우스로 선택.
-7. 트레이 아이콘 우클릭 → **설정**에서 Windows에 현재 등록되어 사용 가능한 입력기를 확인하고 원하는 슬롯에 배정합니다. `↑` `↓`로 순서를 바꾸고 표시 이름도 수정할 수 있습니다.
+Configure **1 to 6 shortcuts slots** for the input methods you actually use. KanaShift discovers available Windows input layouts, so you are not limited to a fixed list of languages.
 
-## 언어 및 입력기 지원 방식
+> **Status:** v0.5 — development release. Windows 10/11 is the intended platform. Some IME mode changes depend on the installed IME and the target application; cross-device Windows testing is still required.
 
-**모든 언어를 고정 목록으로 보여주지 않습니다.** Windows `GetKeyboardLayoutList`의 현재 사용 가능한 입력기(HKL)를 검색해 설정에 표시합니다. 첫 실행 시 설치된 목록에서 1개 슬롯을 보여주며 사용자가 1-6개를 자유롭게 등록합니다. 이미 저장된 슬롯은 최대한 유지하되, Windows에서 제거되었거나 사용할 수 없는 입력기는 실행 화면에서 제외합니다. 설정에서 **입력기 다시 검색**을 누르면 최신 목록을 다시 읽습니다. 아래 언어는 설치했을 때 선택 가능한 예시입니다.
+## Features
 
-| 언어 | 입력기 설정 |
-|---|---|
-| 한국어 | **한글 / 영문(한·영)**. 영문은 기본 설정에서 한국어 IME의 영문 상태이며, 영국/미국 영어 배열이 설치된 경우 그 레이아웃도 따로 선택 가능 |
-| 일본어 | **전각 히라가나, 전각 가타카나, 반각 가타카나, 가타카나 매번 선택, 현재 설정 유지** |
-| 중국어 간체 | **중국어(중국/싱가포르) IME/배열**을 등록 후 선택. 해당 입력기의 문자 세트 설정을 따름 |
-| 중국어 번체 | **중국어(대만/홍콩/마카오) IME/배열**을 등록 후 선택. 해당 입력기의 문자 세트 설정을 따름 |
-| 러시아어 | Windows 러시아어 키보드 배열 선택 |
-| 스페인어 | Windows 스페인어 키보드 배열 선택 (지역별 배열은 각기 표시) |
-| 프랑스어 | Windows 프랑스어 키보드 배열 선택 |
-| 그 외 | 영어, 독일어, 이탈리아어, 아랍어, 힌디어, 태국어, 베트남어, 튀르키예어, 우크라이나어 등 **PC에 실제 등록된 로캘** 중 선택 |
+- **One shortcut, one overlay:** Press `CapsLock + Q` to open the input selector in the center of the screen.
+- **1–6 customizable slots:** Add only the languages and modes you need, rename the slots, and rearrange them.
+- **First-run setup:** Choose your input methods before enabling the global shortcut.
+- **Detect available input layouts:** Read currently loaded Windows keyboard layouts and IMEs; refresh the list from Settings.
+- **Keyboard or mouse navigation:** Choose a slot with `1–6`, arrow keys and `Enter`, or a mouse click. Press `Esc` to cancel.
+- **Japanese input modes:** Choose full-width Hiragana, full-width Katakana, half-width Katakana, or a prompt asking which Katakana width to use.
+- **Korean input modes:** Select Hangul or Latin-letter input through the Korean IME.
+- **More languages:** Use any compatible, available Windows keyboard layout, including English, Chinese, Russian, French, Spanish, German, and others.
+- **System tray controls:** Open the overlay, edit slots, or quit using the KanaShift tray icon.
+- **Startup indicator:** A brief `Loading....` overlay appears while KanaShift initializes.
+- **Saved preferences:** Slot settings are retained between launches.
 
-**반각 히라가나는 Microsoft 일본어 IME에서 지원되지 않습니다.**
+## Supported languages and input methods
 
-**중국어 간체/번체**: Windows의 간체·번체 지역별 IME 전환 기능을 제공합니다. **동일한 Microsoft Pinyin 내부의 문자 세트(简/繁)를 강제로 바꾸는 기능은 아닙니다.** 해당 IME 설정에서 문자 세트를 별도로 바꾼 경우 지정한 언어 레이블과 출력 글자체가 다를 수 있습니다. 아울러 IME의 영문/중문 상태 전환은 IME 종류마다 다릅니다.
+KanaShift **does not ship language packs or install new input methods**. It works with the keyboard layouts and IMEs exposed by Windows on your device.
 
-**그 밖의 언어**: 러시아어, 프랑스어, 스페인어 등은 대체로 일본어와 달리 IME 문자 변환 모드가 아닌 **키보드 레이아웃 전환**을 사용합니다. 따라서 키보드 레이아웃 전환을 정확히 요청하고, 결과를 확인합니다. 표준 키보드 레이아웃은 일본어용 가나 모드 설정을 사용하지 않습니다.
+| Language / input method | Available configuration |
+| --- | --- |
+| Korean | Hangul / Latin-letter mode (Korean IME) |
+| Japanese | Full-width Hiragana, full-width Katakana, half-width Katakana, or ask for Katakana width |
+| Chinese (Simplified) | Select an available Simplified Chinese keyboard / IME |
+| Chinese (Traditional) | Select an available Traditional Chinese keyboard / IME |
+| English | Select an available keyboard layout (e.g., US or UK) |
+| Russian | Select an available Russian keyboard layout |
+| Spanish | Select an available Spanish keyboard layout |
+| French | Select an available French keyboard layout |
+| Other languages | Select other compatible Windows input layouts detected on your device |
 
-## 조작·설정
+**Important limitations:**
 
-- HUD: `CapsLock + Q` (두 키의 입력이 원래 편집기에 남지 않음), 단독 CapsLock은 원래 기능 유지
-- 선택: `1-6`, `← → ↑ ↓` 후 `Enter`, 또는 마우스 클릭
-- 취소: `Esc`; 가타카나 폭 선택에서 `Esc` 누르면 메인 HUD로 돌아감
-- 트레이 메뉴: HUD 열기, 설정, 종료
-- 첫 실행 설정: 설치된 입력기만 선택 가능, **1-6개 슬롯**을 등록하며 설정 완료 전에는 전역 단축키를 활성화하지 않음
-- 설정: 최대 6개, 슬롯 추가·삭제·순서 변경·이름 변경·IME별 입력 모드 변경. 편집 중 실수한 설정은 창의 X로 닫으면 저장되지 않음
-- 슬롯이 1-2개면 중앙 HUD도 자동으로 작아짐
-- Windows에 새 입력기를 추가했다면 설정에서 **입력기 다시 검색** 실행. 신규 입력기는 기존 슬롯을 자동으로 덮어쓰지 않으며, 슬롯 추가·변경을 통해 지정할 수 있습니다.
-- v0.2의 카타카나 전각/반각/매번 묻기 설정은 최초 실행 시 새 슬롯에 이전될 수 있음
-- 시작 시 간단한 **Loading....** 오버레이 표시, 입력기 초기화 완료 후 자동 종료 (최소 약 0.4초)
-- 사용자 설정: Windows `QSettings` (레지스트리의 `HKEY_CURRENT_USER\\Software\\LuteTools\\KanaShift`)에 저장. 계정정보·비밀번호 사용 안 함.
+- Half-width Hiragana is **not** supported by Microsoft Japanese IME.
+- Selecting a Simplified or Traditional Chinese IME does **not** force the character set inside an individual IME (such as Microsoft Pinyin). That depends on the IME's own settings.
+- Japanese conversion-mode control can behave differently across versions of Microsoft IME and applications.
+- KanaShift uses the Windows `GetKeyboardLayoutList` API, which enumerates **currently loaded input layouts**, not every language pack installed on the machine. If a newly added layout is missing, activate it in Windows and refresh the list; signing out and back in may also help.
 
-## 현재 기술적 한계
+## Requirements
 
-- Windows Input Locale API와 최신 TSF IME가 모든 응용프로그램에서 동일하게 동작하지는 않습니다. 특히 일본어 문자 모드 고정이나 중국어 내부 변환 모드의 제어는 IME 구현에 영향을 받습니다.
-- 이 프로그램은 HKL(Input Locale) 전환을 실제 적용 후 확인하며, 그 결과가 다를 때 경고를 표시합니다. 일본어 문자 모드는 구형 IMM32·Microsoft IME 단축키를 순서대로 시도하고 검증합니다.
-- 입력기 전환 대상이 관리자 권한 실행 프로그램일 경우, 권한 차이로 입력기 전환이 막힐 수 있습니다.
-- `GetKeyboardLayoutList`는 Windows의 **현재 로드되어 있는 입력 로캘**을 제공합니다. 언어 팩 전체 목록이나 모든 설치 파일을 조회하지는 않습니다. Windows 설정에서 키보드를 추가했더라도 아직 로드되지 않은 항목은 보이지 않을 수 있습니다. 로그인 세션을 다시 시작하거나 Windows 입력기에서 해당 키보드를 선택한 뒤 새로 검색하세요.
-- Windows 실기에서 최종 테스트되지 않았습니다. Python 단위 테스트와 정적 검사를 통과한 개발 버전입니다.
+- Windows 10 or Windows 11
+- Python 3.10 or newer (for running from source)
+- [PySide6](https://pypi.org/project/PySide6/) (installed through `requirements.txt`)
+- The keyboard layouts / IMEs you want to use must already be configured in Windows
 
-## 개발·배포
+## Installation
 
-`py -m unittest discover -s tests -v`로 단위 테스트를 실행합니다. 이 버전은 자동 단위 테스트를 통과했으며 Windows 실기 GUI 렌더링은 아직 검증되지 않았습니다. `build_windows.bat`는 PyInstaller로 `dist\\KanaShift.exe`를 만드는 편의 스크립트입니다. EXE 생성은 Windows에서 실행해야 합니다.
+### Run from source
 
-## 참고 문서
+1. Download or clone the repository.
+2. Make sure Python is installed and available through the Windows `py` launcher.
+3. Run **`install.bat`** to install dependencies.
+4. Run **`run.bat`** to launch KanaShift.
 
-- [Windows 입력기 추가/관리](https://support.microsoft.com/ko-kr/windows/hardware/input-devices/manage-the-language-and-keyboard-input-layout-settings-in-windows)
-- [Windows 입력 로캘 열거 API](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeyboardlayoutlist)
-- [Microsoft 일본어 IME](https://support.microsoft.com/en-us/windows/hardware/input-devices/microsoft-japanese-ime)
-- [Microsoft 중국어 간체 IME](https://learn.microsoft.com/en-us/globalization/input/simplified-chinese-ime)
-- [Microsoft 중국어 번체 IME](https://support.microsoft.com/en-us/windows/hardware/input-devices/microsoft-traditional-chinese-ime)
+Alternatively, use Windows Terminal or Command Prompt:
+
+```powershell
+py -m pip install -r requirements.txt
+py app.py
+```
+
+Run **`debug.bat`** to launch with a visible console if startup fails or you need to read error messages.
+
+### Build a standalone executable
+
+Run **`build_windows.bat`** on Windows. It uses PyInstaller and writes the executable to:
+
+```text
+dist\KanaShift.exe
+```
+
+You can also build manually:
+
+```powershell
+py -m pip install -r requirements.txt pyinstaller
+py -m PyInstaller --noconfirm --clean --onefile --windowed --name KanaShift app.py
+```
+
+The executable bundles the Python dependencies, but **does not bundle Windows language packs or IMEs**. A compiled EXE is not included in the source repository unless a release explicitly provides one.
+
+## Getting started
+
+1. Launch KanaShift. A short **`Loading....`** indicator will appear.
+2. On first launch, select an available keyboard layout and input mode for **Slot 1**.
+3. Click **Add input method** if you want more slots (up to six). You can also use just one slot.
+4. Save your settings. The global shortcut is enabled after the first-run setup finishes.
+5. Press **`CapsLock + Q`** in another application to open the input selector.
+6. Choose a slot and continue typing in your original application.
+
+Already configured? KanaShift skips the first-run wizard. To make changes later, right-click the **K** icon in the Windows system tray and open **Settings**.
+
+## Keyboard controls
+
+| Action | Shortcut |
+| --- | --- |
+| Open / close the selector | `CapsLock + Q` |
+| Select a configured slot | `1`–`6` |
+| Move selection | Arrow keys |
+| Confirm | `Enter` |
+| Cancel / close | `Esc` |
+
+Pressing `CapsLock` alone retains its usual behavior. When the `CapsLock + Q` shortcut is recognized, KanaShift is designed to suppress the shortcut keystrokes so they do not appear in the active text field.
+
+## Settings and privacy
+
+KanaShift stores user preferences using Qt's `QSettings` in the current Windows user profile:
+
+```text
+HKEY_CURRENT_USER\Software\LuteTools\KanaShift
+```
+
+The application does **not** require your Windows password or an online account. Its global keyboard hook is used to detect the activation shortcut; it is **not** intended as a keystroke recorder. Input method changes are performed locally using Windows APIs.
+
+## Troubleshooting
+
+**My language or keyboard is not listed.**  
+Add it in **Windows Settings → Time & language → Language & region**, activate the keyboard layout, then use **Refresh input methods** in KanaShift Settings. Windows may not report a newly installed but not yet loaded layout.
+
+**An input mode does not change as expected.**  
+IME behavior varies by Windows version, keyboard layout, and application. Japanese and Chinese internal conversion modes in particular may not respond identically everywhere. If the target application is running as administrator, a non-elevated KanaShift instance may be unable to control it.
+
+**KanaShift does not open or the shortcut is unavailable.**  
+Run `debug.bat` to check errors. Also check whether another utility has reserved `CapsLock + Q`.
+
+## Project structure
+
+```text
+KanaShift/
+├── app.py                  # PySide6 UI, system tray, and application state
+├── hotkeys_windows.py      # Global CapsLock + Q hotkey
+├── ime_windows.py          # Windows input layout / IME operations
+├── layout_profiles.py      # Input discovery and customizable slots
+├── requirements.txt        # Python dependencies
+├── install.bat             # Install dependencies
+├── run.bat                 # Start the app
+├── debug.bat               # Console-based troubleshooting
+├── build_windows.bat       # Build a Windows EXE
+└── tests/                  # Unit tests
+```
+
+Run the tests with:
+
+```powershell
+py -m unittest discover -s tests -v
+```
+
+## Credits
+
+**Developed by Lutté Laurent**
+
+## License
+
+Licensed under the **MIT License**. See [LICENSE](LICENSE) for the complete license text.
