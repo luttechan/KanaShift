@@ -141,7 +141,6 @@ KanaShift/
 ├── install.bat             # Install dependencies
 ├── run.bat                 # Start the app
 ├── debug.bat               # Console-based troubleshooting
-├── build_windows.bat       # Build a Windows EXE
 └── tests/                  # Unit tests
 ```
 
