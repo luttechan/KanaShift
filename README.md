@@ -19,7 +19,6 @@ Configure **1 to 6 shortcuts slots** for the input methods you actually use. Kan
 - **Korean input modes:** Select Hangul or Latin-letter input through the Korean IME.
 - **More languages:** Use any compatible, available Windows keyboard layout, including English, Chinese, Russian, French, Spanish, German, and others.
 - **System tray controls:** Open the overlay, edit slots, or quit using the KanaShift tray icon.
-- **Startup indicator:** A brief `Loading....` overlay appears while KanaShift initializes.
 - **Saved preferences:** Slot settings are retained between launches.
 
 ## Supported languages and input methods
@@ -40,7 +39,6 @@ KanaShift **does not ship language packs or install new input methods**. It work
 
 **Important limitations:**
 
-- Half-width Hiragana is **not** supported by Microsoft Japanese IME.
 - Selecting a Simplified or Traditional Chinese IME does **not** force the character set inside an individual IME (such as Microsoft Pinyin). That depends on the IME's own settings.
 - Japanese conversion-mode control can behave differently across versions of Microsoft IME and applications.
 - KanaShift uses the Windows `GetKeyboardLayoutList` API, which enumerates **currently loaded input layouts**, not every language pack installed on the machine. If a newly added layout is missing, activate it in Windows and refresh the list; signing out and back in may also help.
